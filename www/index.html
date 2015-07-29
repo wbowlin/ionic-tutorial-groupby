@@ -37,13 +37,13 @@
           <input type="search" placeholder="Search" ng-model="searchText">
         </label>
         <ion-list>
-          <div collection-repeat="item in vm.items | filter:searchText | groupByMonthYear" divider-collection-repeat>
+          <div collection-repeat="item in vm.items | filter:searchText | orderBy:'-date' | groupByMonthYearDay:'date'" divider-collection-repeat>
               <ion-item>
                 <div>{{ item.description }}</div>
-                <div>{{ item.date | date:'dd-MM-yyyy' }}</div>
+                <div>{{ item.date | date:'shortTime' }}</div>
               </ion-item>
           </div>
-        </ion-list>  
+        </ion-list>
       </ion-content>
     </ion-pane>
   </body>

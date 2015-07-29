@@ -2,34 +2,36 @@
 
 	angular.module('starter')
 
-	.filter('groupByMonthYear', function($parse) {
+	.filter('groupByMonthYearDay', function($parse) {
 
 		var dividers = {};
 
-		return function(input) {
+		return function(input, dateField) {
 			if (!input || !input.length) return;
-			
-			var output = [], 
-				previousDate, 
+
+			var output = [],
+				previousDate,
 				currentDate;
 
 			for (var i = 0, ii = input.length; i < ii && (item = input[i]); i++) {
-				currentDate = moment(item.date);
+				currentDate = moment(item[dateField]);
 				if (!previousDate ||
 					currentDate.month() != previousDate.month() ||
-					currentDate.year() != previousDate.year()) {
+					currentDate.year() != previousDate.year() ||
+				  currentDate.day() != previousDate.day()
+				) {
 
-					var dividerId = currentDate.format('MMYYYY');
-					
+					var dividerId = currentDate.format('YYYYMMDD');
+
 					if (!dividers[dividerId]) {
 						dividers[dividerId] = {
 							isDivider: true,
-							divider: currentDate.format('MMMM YYYY') 
+							divider: currentDate.format('ll')
 						};
 					}
-					
+
 					output.push(dividers[dividerId]);
-					
+
 				}
 				output.push(item);
 
